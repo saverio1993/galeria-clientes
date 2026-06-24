@@ -21,4 +21,14 @@ window.GALLERY_CONFIG = {
 
   // Nota opcional que se agrega al final del cuerpo del correo
   galleryNote: 'Gracias por revisar la galería. Si necesitas otra selección avísame.',
+
+  // Repo donde se publica la galería (usado por admin.html para subir fotos)
+  repo: {
+    owner: 'saverio1993',
+    repo:  'galeria-clientes',
+    branch: 'main',
+  },
+
+  // Tamaño máximo por foto al subir desde admin.html (MB)
+  maxFileSizeMB: 25,
 };

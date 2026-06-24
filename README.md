@@ -129,6 +129,28 @@ git push -u origin main
 
 ## 4 · Flujo de trabajo cada vez que agregas fotos
 
+Tienes **3 opciones** según lo que necesites:
+
+### Opción A · Panel web (admin.html) — recomendada para JPG/PNG/WEBP
+
+1. Abre <https://saverio1993.github.io/galeria-clientes/admin.html>
+2. Pega tu GitHub Personal Access Token (se guarda solo en tu navegador)
+3. Arrastra las fotos → click "Subir"
+4. Se suben a GitHub y la galería se actualiza sola en ~30s
+5. También puedes borrar fotos existentes con la ✕
+
+> ⚠️ Las fotos `.ARW` no se pueden subir desde el navegador (no hay decoder RAW en JS). Para esas usa la opción B o C.
+
+### Opción B · `subir.bat` (Windows) — un doble click
+
+Para fotos `.ARW` o cualquier mezcla:
+
+1. Copia los archivos a `images-origen/`
+2. Doble click en `subir.bat`
+3. El script: convierte ARW → JPG → hace commit → sube a GitHub
+
+### Opción C · Manual (línea de comandos)
+
 ```powershell
 # 1. Arrastra los nuevos ARW/JPG a images-origen/
 # 2. Regenera las JPGs
@@ -200,15 +222,20 @@ draw.text((image.width - 380, image.height - 60), text, fill=(255, 255, 255))
 
 ```
 galeria-fotos/
-├── index.html              ← página principal
-├── config.js               ← tu config (correo, marca, etc.)
+├── index.html              ← galería pública (clientes)
+├── admin.html              ← panel admin (tú, con token GitHub)
+├── config.js               ← tu config (correo, marca, repo)
 ├── assets/
-│   ├── style.css           ← todo el estilo
-│   └── app.js              ← lógica (galería, selección, mailto)
+│   ├── style.css           ← estilo galería + admin
+│   ├── app.js              ← lógica galería (selección, mailto)
+│   ├── admin.css           ← estilo admin
+│   └── admin.js            ← lógica admin (subir/borrar vía API)
 ├── images-origen/          ← (NO se sube) aquí van los ARW/JPG originales
 ├── images/                 ← JPGs optimizadas + manifest.json (SÍ se sube)
+├── subir.bat               ← doble click en Windows: convierte + push
 └── scripts/
-    └── convertir.py        ← ARW/RAW → JPG
+    ├── convertir.py        ← ARW/RAW → JPG (el que usarás siempre)
+    └── demo-imgs.py        ← genera imágenes placeholder (opcional)
 ```
 
 ---
