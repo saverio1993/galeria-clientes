@@ -52,6 +52,8 @@
     lbClose: $('lbClose'),
     lbPrev: $('lbPrev'),
     lbNext: $('lbNext'),
+    lbFigure: document.querySelector('.lb-figure'),
+    lbHint: document.querySelector('.lb-hint'),
     modal: $('modal'),
     modalSummary: $('modalSummary'),
     form: $('submitForm'),
@@ -77,6 +79,10 @@
     els.lbPrev.addEventListener('click', () => navigateLightbox(-1));
     els.lbNext.addEventListener('click', () => navigateLightbox(1));
     els.lbLike.addEventListener('click', () => toggleLightboxLike());
+    els.lbImg.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleLightboxActual();
+    });
     els.lightbox.addEventListener('click', (e) => {
       if (e.target === els.lightbox) closeLightbox();
     });
@@ -231,6 +237,7 @@
   function openLightbox(idx) {
     if (idx < 0 || idx >= state.images.length) return;
     state.lightboxIndex = idx;
+    setLightboxActual(false);
     const name = state.images[idx];
     els.lbImg.src = `images/${encodeURIComponent(name)}`;
     els.lbImg.alt = `Foto ${idx + 1}`;
@@ -247,8 +254,24 @@
     els.lightbox.hidden = true;
     els.lightbox.setAttribute('aria-hidden', 'true');
     els.lbImg.src = '';
+    setLightboxActual(false);
     document.body.style.overflow = '';
     state.lightboxIndex = -1;
+  }
+
+  function setLightboxActual(on) {
+    els.lbFigure.classList.toggle('is-actual', on);
+    els.lbImg.title = on ? 'Click para ajustar a pantalla' : 'Click para ver al tamaño real';
+  }
+
+  function toggleLightboxActual() {
+    if (state.lightboxIndex < 0) return;
+    const isActual = els.lbFigure.classList.contains('is-actual');
+    setLightboxActual(!isActual);
+    // al pasar a 100%, scroll al inicio de la imagen
+    if (!isActual) {
+      els.lbFigure.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
   }
 
   function navigateLightbox(delta) {

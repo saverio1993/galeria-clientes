@@ -95,14 +95,14 @@ def main() -> int:
         "--quality",
         "-q",
         type=int,
-        default=88,
-        help="Calidad JPG 1-100 (default: 88)",
+        default=92,
+        help="Calidad JPG 1-100 (default: 92 — alta, casi imperceptible)",
     )
     parser.add_argument(
         "--max-width",
         type=int,
-        default=2400,
-        help="Ancho máximo en píxeles (default: 2400, escalado si es mayor)",
+        default=3200,
+        help="Ancho máximo en píxeles (default: 3200, escalado si es mayor)",
     )
     args = parser.parse_args()
 
